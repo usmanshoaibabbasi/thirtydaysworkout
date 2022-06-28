@@ -158,6 +158,27 @@ class _SplashScreenState extends State<SplashScreen> {
                     ),
                   ),
                   SizedBox(
+                    height: screenheight * 0.10,
+                    width: screenwidth,
+                    child: LinearPercentIndicator(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      animation: true,
+                      animationDuration: 500,
+                      lineHeight: 20.0,
+                      percent: percent / 100,
+                      barRadius: const Radius.circular(20),
+                      center: Text(
+                        "$percent%",
+                        style: const TextStyle(
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black),
+                      ),
+                      progressColor: navbarcolor,
+                      backgroundColor: Colors.grey[300],
+                    ),
+                  ),
+                  SizedBox(
                     height: screenheight * 0.25,
                     width: screenwidth,
                     child: Center(
