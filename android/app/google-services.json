@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "603745979739",
+    "project_id": "thirtydaysworkout",
+    "storage_bucket": "thirtydaysworkout.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:603745979739:android:d3ae1c7549da041c4c9e7e",
+        "android_client_info": {
+          "package_name": "com.example.thirty_days_workout"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "603745979739-4tu7hpl8udrfjll61rt4b6tnj96rtb61.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDW7OdYO4hgaVcr6E5_zQnrBKjh3p6VaI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "603745979739-4tu7hpl8udrfjll61rt4b6tnj96rtb61.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
