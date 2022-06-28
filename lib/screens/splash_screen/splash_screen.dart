@@ -135,6 +135,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   //     ),
                   //   ),
                   // ),
+                  /// changes /////////////////////
                   SizedBox(
                     height: screenheight * 0.10,
                     width: screenwidth,

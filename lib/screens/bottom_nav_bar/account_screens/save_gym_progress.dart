@@ -80,7 +80,7 @@ class GymProgress extends StatelessWidget {
                     ),
                     accountText(
                         context: context,
-                        passtext: 'CLOUD STORAGEE',
+                        passtext: 'CLOUD STORAGE',
                         passfontsize: 36.0,
                         passfontweight: FontWeight.normal,
                         passcolor: const Color(0xffFFFFFF)),
