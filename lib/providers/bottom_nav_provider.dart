@@ -6,7 +6,15 @@ class BottomNavProvider with ChangeNotifier{
   int get currentIndex => _currentIndex ;
   void setindex(int index) {
     _currentIndex  = index;
+    if(kDebugMode) {
+      print('11111111111111111');
+    print(AdHelper.interstitialAdCount);
+    }
     AdHelper.interstitialAdCount +=1;
+    if(kDebugMode) {
+      print('222222222222222');
+    print(AdHelper.interstitialAdCount);
+    }
     if(AdHelper.interstitialAdCount == AdHelper.noTabsToShowAdd) {
       InterstitialAdclass.showInterstitialAd();
     }

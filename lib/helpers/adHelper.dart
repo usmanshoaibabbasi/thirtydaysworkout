@@ -1,6 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class AdHelper {
+  /// video link for intensitions add ///
+  /// https://youtu.be/MLEOFZoxMxc ///
   static int noTabsToShowAdd = 2;
   static int interstitialAdCount = 0;
   static String get bannerAdUnitId {
@@ -25,10 +28,16 @@ class InterstitialAdclass {
       request: AdRequest(),
       adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (ad) {
+          if(kDebugMode) {
+            print('add loaded');
+          }
           interstitialAd = ad;
           _interstitialAdLoadAttempts = 0;
         },
         onAdFailedToLoad: (error) {
+          if(kDebugMode) {
+            print('add Failed to load');
+          }
           _interstitialAdLoadAttempts += 1;
           interstitialAd = null;
           if (_interstitialAdLoadAttempts <= maxFailLoadAttempts) {
