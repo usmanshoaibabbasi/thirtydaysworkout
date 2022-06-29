@@ -183,9 +183,12 @@ class _homeDaysListCardState extends State<homeDaysListCard> {
     var dbHelper = DBHelper();
     List<homeDaysModalFullData> homeDaysListfulldata =
         await dbHelper.gethowmuchworkdone(widget.indexOfHomeDaysList.id);
-    setState(() {
+        if(mounted) {
+          setState(() {
       how_much_work_list = homeDaysListfulldata;
     });
+        }
+    
     int b = 0;
     while (b < how_much_work_list.length && how_much_work_list[b].status == 1) {
       b = b + 1;

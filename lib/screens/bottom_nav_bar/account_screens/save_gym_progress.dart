@@ -14,6 +14,7 @@ class GymProgress extends StatelessWidget {
   GymProgress({Key? key}) : super(key: key);
 
   var gymprogr;
+  bool founddata = false;
   @override
   Widget build(BuildContext context) {
     final screenheight = (MediaQuery.of(context).size.height) - 60;
@@ -189,46 +190,69 @@ class GymProgress extends StatelessWidget {
                                       useremail: user.email as String,
                                     )
                                         .then((value) => {
-                                              for (int i = 0;
-                                                  i <= gymprogr;
-                                                  i++)
+                                              if (founddata == true)
                                                 {
-                                                  updateExerciseStatus(
-                                                    context,
-                                                    i,
-                                                    statusupdate,
-                                                  )
+                                                  for (int i = 0;
+                                                      i <= gymprogr;
+                                                      i++)
+                                                    {
+                                                      updateExerciseStatus(
+                                                        context,
+                                                        i,
+                                                        statusupdate,
+                                                      )
+                                                    }
                                                 }
                                             })
                                         .then((value) => {
-                                              provider.setloading(false),
-                                              ScaffoldMessenger.of(context)
-                                                  .hideCurrentSnackBar(),
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(SnackBar(
-                                                content: const Text(
-                                                    'Your Progress Fetched'),
-                                                duration:
-                                                    const Duration(seconds: 1),
-                                                action: SnackBarAction(
-                                                  label: 'Dismiss',
-                                                  onPressed: () {
-                                                    ScaffoldMessenger.of(
-                                                            context)
-                                                        .hideCurrentMaterialBanner();
-                                                  },
-                                                ),
-                                              )),
+                                              if (founddata == false)
+                                                {
+                                                  provider.setloading(false),
+                                                  ScaffoldMessenger.of(context)
+                                                      .hideCurrentSnackBar(),
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(SnackBar(
+                                                    content: const Text(
+                                                        'Data Not Found'),
+                                                    duration: const Duration(
+                                                        seconds: 1),
+                                                    action: SnackBarAction(
+                                                      label: 'Dismiss',
+                                                      onPressed: () {
+                                                        ScaffoldMessenger.of(
+                                                                context)
+                                                            .hideCurrentMaterialBanner();
+                                                      },
+                                                    ),
+                                                  )),
+                                                }
+                                              else
+                                                {
+                                                  provider.setloading(false),
+                                                  ScaffoldMessenger.of(context)
+                                                      .hideCurrentSnackBar(),
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(SnackBar(
+                                                    content: const Text(
+                                                        'Your Progress Fetched'),
+                                                    duration: const Duration(
+                                                        seconds: 1),
+                                                    action: SnackBarAction(
+                                                      label: 'Dismiss',
+                                                      onPressed: () {
+                                                        ScaffoldMessenger.of(
+                                                                context)
+                                                            .hideCurrentMaterialBanner();
+                                                      },
+                                                    ),
+                                                  )),
+                                                }
                                             })
                                         .then((value) => {
-                                              Navigator.pop(context),
-                                              // bottomNavProvider.setindex(0),
-                                              // Navigator.pushNamedAndRemoveUntil(
-                                              //   context,
-                                              //   dashBoardRoute,
-                                              //   ModalRoute.withName(
-                                              //       dashBoardRoute),
-                                              // )
+                                              if (founddata == true)
+                                                {
+                                                  Navigator.pop(context),
+                                                }
                                             });
 
                                     ///
@@ -249,10 +273,8 @@ class GymProgress extends StatelessWidget {
                                         Provider.of<GoogleSignInProvider>(
                                             context,
                                             listen: false);
-                                    provider.setloading(true);
-                                    provider.googleLogin().then((value) {
-                                      provider.setloading(false);
-                                      Navigator.pop(context);
+                                    provider.logout().then((value) => {
+                                      Navigator.pop(context),
                                     });
                                   },
                                   child: const Padding(
@@ -336,7 +358,10 @@ class GymProgress extends StatelessWidget {
       if (kDebugMode) {
         print(snapshot.data()!['exerciseprogress']);
       }
+      founddata = true;
       return snapshot.data();
+    } else {
+      founddata = false;
     }
   }
 

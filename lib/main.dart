@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 import 'package:thirty_days_workout/providers/account_provider.dart';
 import 'package:thirty_days_workout/providers/bmi_provider.dart';
@@ -26,15 +27,14 @@ import 'package:thirty_days_workout/screens/dashboard/dashboard.dart';
 import 'package:thirty_days_workout/helpers/custom_page_route.dart';
 import 'package:thirty_days_workout/screens/splash_screen/splash_screen.dart';
 
-// void main() {
-//   runApp(const MyApp());
-// }
 
 /// In pod File at top platform :ios, '9.0' uncomment and write '9.0' to '10.0' ///
+/// In info.plist for instentitial add in <dict> <key> <key> <key> upto 3 key tags
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  MobileAds.instance.initialize();
   runApp(const MyApp());
 }
 

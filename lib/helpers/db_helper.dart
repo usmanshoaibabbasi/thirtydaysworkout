@@ -179,7 +179,9 @@ class DBHelper {
   /// Get Home Screen List
   Future<List<homeDaysModal>> gethomelist() async {
     var dbClient = await db;
-    List<Map> list = await dbClient!.rawQuery('SELECT  * FROM    ( SELECT  *, ROW_NUMBER() OVER (PARTITION BY day ORDER BY id) rn FROM    gym_exercise ) WHERE   rn = 1');
+    //List<Map> list = await dbClient!.rawQuery('SELECT  * FROM    ( SELECT  *, ROW_NUMBER() OVER (PARTITION BY day ORDER BY id) rn FROM    gym_exercise ) WHERE   rn = 1');
+    List<Map> list =
+        await dbClient!.rawQuery('SELECT  * FROM gym_exercise GROUP by day');
     List<homeDaysModal> listOfHomeDays = [];
     for (int i = 0; i < list.length; i++) {
       listOfHomeDays.add(homeDaysModal(
@@ -193,6 +195,7 @@ class DBHelper {
     // }
     return listOfHomeDays;
   }
+
   /// Get Home Screen List Full Data
   Future<List<homeDaysModalFullData>> gethowmuchworkdone(int id) async {
     // if(kDebugMode) {
@@ -200,7 +203,8 @@ class DBHelper {
     // }
     var dbClient = await db;
     int idhere = id;
-    List<Map> list = await dbClient!.rawQuery('SELECT * FROM gym_exercise WHERE day = (SELECT day FROM gym_exercise WHERE id = $idhere)');
+    List<Map> list = await dbClient!.rawQuery(
+        'SELECT * FROM gym_exercise WHERE day = (SELECT day FROM gym_exercise WHERE id = $idhere)');
     List<homeDaysModalFullData> listOfHomeDaysfulldata = [];
     for (int i = 0; i < list.length; i++) {
       listOfHomeDaysfulldata.add(homeDaysModalFullData(
@@ -212,11 +216,14 @@ class DBHelper {
     // }
     return listOfHomeDaysfulldata;
   }
+
   /// Get EveryDay Exercise List
-  Future<List<everyDayExerciseModal>> getEveryDayExerciselist(int daynumber) async {
+  Future<List<everyDayExerciseModal>> getEveryDayExerciselist(
+      int daynumber) async {
     var dbClient = await db;
     int daynumberhere = daynumber;
-    List<Map> list = await dbClient!.rawQuery('select * from gym_exercise WHERE DAY = $daynumberhere');
+    List<Map> list = await dbClient!
+        .rawQuery('select * from gym_exercise WHERE DAY = $daynumberhere');
     List<everyDayExerciseModal> listOfEveryDayExercise = [];
     for (int i = 0; i < list.length; i++) {
       listOfEveryDayExercise.add(everyDayExerciseModal(
@@ -235,15 +242,18 @@ class DBHelper {
     // }
     return listOfEveryDayExercise;
   }
+
   Future<dynamic> updateExerciseStatus(int id, int statusupdate) async {
     var dbClient = await db;
     int idhere = id;
-    List<Map> result = await dbClient!.rawQuery('UPDATE gym_exercise SET status = $statusupdate WHERE id = $idhere;');
-    if(kDebugMode) {
+    List<Map> result = await dbClient!.rawQuery(
+        'UPDATE gym_exercise SET status = $statusupdate WHERE id = $idhere;');
+    if (kDebugMode) {
       print(result);
     }
     return result;
   }
+
   /// Get Full Data to Store To Firestore
   Future<List<gymExercisesModal>> getGymExercisesFullList() async {
     // if(kDebugMode) {

@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:thirty_days_workout/helpers/adHelper.dart';
 import 'package:thirty_days_workout/providers/bottom_nav_provider.dart';
 import 'package:thirty_days_workout/screens/bottom_nav_bar/account_screens/account_screen.dart';
 import 'package:thirty_days_workout/screens/bottom_nav_bar/bmi_screens/bmi_screen.dart';
@@ -27,6 +28,14 @@ class _MyHomePageState extends State<MyHomePage> {
     const AccountScreen(),
   ];
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    if (InterstitialAdclass.interstitialAd == null) {
+      InterstitialAdclass.createInterstitialAd();
+    }
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     final bottomNavProvider = Provider.of<BottomNavProvider>(context);
