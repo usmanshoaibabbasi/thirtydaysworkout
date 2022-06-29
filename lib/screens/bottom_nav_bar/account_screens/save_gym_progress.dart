@@ -137,10 +137,10 @@ class GymProgress extends StatelessWidget {
                                             username:
                                                 user.displayName as String,
                                             useremail: user.email as String,
-                                            exerciseprogress: exerciseprogress);
-                                        provider.setloading(false);
+                                            exerciseprogress: exerciseprogress).then((value) => {
+                                              provider.setloading(false),
                                         ScaffoldMessenger.of(context)
-                                            .hideCurrentSnackBar();
+                                            .hideCurrentSnackBar(),
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(SnackBar(
                                           content:
@@ -153,7 +153,11 @@ class GymProgress extends StatelessWidget {
                                                   .hideCurrentMaterialBanner();
                                             },
                                           ),
-                                        ));
+                                        )),
+                                            }).then((value) => {
+                                              Navigator.pop(context),
+                                            });
+                                        
                                       }
                                     });
                                   },
@@ -181,7 +185,7 @@ class GymProgress extends StatelessWidget {
                                       useremail: user.email as String,
                                     )
                                         .then((value) => {
-                                              for (int i = 0; i < gymprogr; i++)
+                                              for (int i = 0; i <= gymprogr; i++)
                                                 {
                                                   updateExerciseStatus(
                                                     context,
