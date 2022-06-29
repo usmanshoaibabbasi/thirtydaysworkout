@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:thirty_days_workout/data/image_paths.dart';
 import 'package:thirty_days_workout/main.dart';
+import 'package:thirty_days_workout/providers/account_provider.dart';
 import 'package:thirty_days_workout/providers/bottom_nav_provider.dart';
 import 'package:thirty_days_workout/widgets/account_widget.dart';
 import 'package:thirty_days_workout/widgets/header.dart';
@@ -107,17 +109,46 @@ class AccountScreen extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              ElevatedButton(
-                  onPressed: () {
+              ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.white,
+                  onPrimary: Colors.black,
+                  // minimumSize: const Size(double.infinity, 50),
+                ),
+                icon: const Padding(
+                  padding: EdgeInsets.fromLTRB(10, 10, 0, 10),
+                  child: FaIcon(
+                    FontAwesomeIcons.google,
+                    color: Colors.red,
+                  ),
+                ),
+                label: Consumer<GoogleSignInProvider>(
+                    builder: (context, value, child) {
+                  if (value.loading == false) {
+                    return const Text(
+                      'Sign In With Google',
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
+                    );
+                  } else {
+                    return const Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 3),
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                }),
+                onPressed: () {
+                  final provider =
+                      Provider.of<GoogleSignInProvider>(context, listen: false);
+                  provider.setloading(true);
+                  provider.googleLogin().then((value) {
+                    provider.setloading(false);
                     Navigator.pushNamed(context, gymProgressRoute);
-                  },
-                  child: const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-                    child: Text(
-                      'SIGN IN',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                  )),
+                  });
+                },
+              ),
               const SizedBox(
                 height: 10,
               ),

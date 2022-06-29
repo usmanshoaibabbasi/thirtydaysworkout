@@ -43,10 +43,10 @@ dependencies:
   provider: any
   youtube_player_flutter: any
   flutter_staggered_animations: any
-  cloud_firestore: ^3.1.18
+  google_sign_in: any
+  firebase_storage: any
+  cloud_firestore: any
   firebase_auth: ^3.3.20
-  firebase_core: ^1.18.0
-  flutter_summernote: ^1.0.0
   
 dev_dependencies:
   flutter_test:

@@ -1,8 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:thirty_days_workout/providers/account_provider.dart';
 import 'package:thirty_days_workout/providers/bmi_provider.dart';
 import 'package:thirty_days_workout/providers/bottom_nav_provider.dart';
+import 'package:thirty_days_workout/providers/gym_exercises_provider.dart';
 import 'package:thirty_days_workout/providers/home_everyday_provider.dart';
 import 'package:thirty_days_workout/providers/home_provider.dart';
 import 'package:thirty_days_workout/screens/bottom_nav_bar/account_screens/save_gym_progress.dart';
@@ -24,6 +26,12 @@ import 'package:thirty_days_workout/screens/dashboard/dashboard.dart';
 import 'package:thirty_days_workout/helpers/custom_page_route.dart';
 import 'package:thirty_days_workout/screens/splash_screen/splash_screen.dart';
 
+// void main() {
+//   runApp(const MyApp());
+// }
+
+/// In pod File at top platform :ios, '9.0' uncomment and write '9.0' to '10.0' ///
+
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -44,6 +52,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => BmiHeightProvider()),
         ChangeNotifierProvider(create: (_) => HomeProvider()),
         ChangeNotifierProvider(create: (_) => HomeEveryDayProvider()),
+        ChangeNotifierProvider(create: (_) => GoogleSignInProvider()),
+        ChangeNotifierProvider(create: (_) => GymExercisesFullProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -198,7 +208,7 @@ class MyApp extends StatelessWidget {
 
           /// Gym Progress Screen ///
           if (settings.name == gymProgressRoute) {
-            return MaterialPageRoute(builder: (context) => const GymProgress());
+            return MaterialPageRoute(builder: (context) => GymProgress());
           }
 
           /// End

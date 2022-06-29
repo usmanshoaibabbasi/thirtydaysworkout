@@ -5,6 +5,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:thirty_days_workout/modals/gym_diet_modal.dart';
+import 'package:thirty_days_workout/modals/gym_exercises_modal.dart';
 import 'package:thirty_days_workout/modals/home_screen_modals.dart';
 import 'package:thirty_days_workout/modals/weight_gain_plan_modal.dart';
 import 'package:thirty_days_workout/modals/weight_loss_plan_modal.dart';
@@ -242,5 +243,25 @@ class DBHelper {
       print(result);
     }
     return result;
+  }
+  /// Get Full Data to Store To Firestore
+  Future<List<gymExercisesModal>> getGymExercisesFullList() async {
+    // if(kDebugMode) {
+    //   print('Enter in DB getGymExercisesFullList');
+    // }
+    var dbClient = await db;
+    List<Map> list = await dbClient!.rawQuery('SELECT  * FROM gym_exercise');
+    List<gymExercisesModal> listOfGymExercisesFullList = [];
+    for (int i = 0; i < list.length; i++) {
+      listOfGymExercisesFullList.add(gymExercisesModal(
+        list[i]["id"],
+        list[i]["status"],
+      ));
+    }
+    // if(kDebugMode) {
+    //   print('listOfGymExercisesFullList in Db Function');
+    //   print(listOfGymExercisesFullList);
+    // }
+    return listOfGymExercisesFullList;
   }
 }
