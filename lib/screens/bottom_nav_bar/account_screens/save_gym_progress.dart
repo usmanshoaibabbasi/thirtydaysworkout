@@ -4,8 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:thirty_days_workout/helpers/db_helper.dart';
-import 'package:thirty_days_workout/main.dart';
 import 'package:thirty_days_workout/modals/gym_exercises_modal.dart';
+import 'package:thirty_days_workout/providers/account_provider.dart';
 import 'package:thirty_days_workout/providers/bottom_nav_provider.dart';
 import 'package:thirty_days_workout/providers/gym_exercises_provider.dart';
 import 'package:thirty_days_workout/widgets/header.dart';
@@ -134,30 +134,34 @@ class GymProgress extends StatelessWidget {
                                           print(exerciseprogress.toString());
                                         }
                                         saveGymdata(
-                                            username:
-                                                user.displayName as String,
-                                            useremail: user.email as String,
-                                            exerciseprogress: exerciseprogress).then((value) => {
-                                              provider.setloading(false),
-                                        ScaffoldMessenger.of(context)
-                                            .hideCurrentSnackBar(),
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(SnackBar(
-                                          content:
-                                              const Text('Your Progress Saved'),
-                                          duration: const Duration(seconds: 1),
-                                          action: SnackBarAction(
-                                            label: 'Dismiss',
-                                            onPressed: () {
-                                              ScaffoldMessenger.of(context)
-                                                  .hideCurrentMaterialBanner();
-                                            },
-                                          ),
-                                        )),
-                                            }).then((value) => {
-                                              Navigator.pop(context),
-                                            });
-                                        
+                                                username:
+                                                    user.displayName as String,
+                                                useremail: user.email as String,
+                                                exerciseprogress:
+                                                    exerciseprogress)
+                                            .then((value) => {
+                                                  provider.setloading(false),
+                                                  ScaffoldMessenger.of(context)
+                                                      .hideCurrentSnackBar(),
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(SnackBar(
+                                                    content: const Text(
+                                                        'Your Progress Saved'),
+                                                    duration: const Duration(
+                                                        seconds: 1),
+                                                    action: SnackBarAction(
+                                                      label: 'Dismiss',
+                                                      onPressed: () {
+                                                        ScaffoldMessenger.of(
+                                                                context)
+                                                            .hideCurrentMaterialBanner();
+                                                      },
+                                                    ),
+                                                  )),
+                                                })
+                                            .then((value) => {
+                                                  Navigator.pop(context),
+                                                });
                                       }
                                     });
                                   },
@@ -185,7 +189,9 @@ class GymProgress extends StatelessWidget {
                                       useremail: user.email as String,
                                     )
                                         .then((value) => {
-                                              for (int i = 0; i <= gymprogr; i++)
+                                              for (int i = 0;
+                                                  i <= gymprogr;
+                                                  i++)
                                                 {
                                                   updateExerciseStatus(
                                                     context,
@@ -232,6 +238,28 @@ class GymProgress extends StatelessWidget {
                                           vertical: 5, horizontal: 20),
                                       child: Text(
                                         ' GET Progress ',
+                                        style: TextStyle(fontSize: 16),
+                                      ))),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              ElevatedButton(
+                                  onPressed: () {
+                                    final provider =
+                                        Provider.of<GoogleSignInProvider>(
+                                            context,
+                                            listen: false);
+                                    provider.setloading(true);
+                                    provider.googleLogin().then((value) {
+                                      provider.setloading(false);
+                                      Navigator.pop(context);
+                                    });
+                                  },
+                                  child: const Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 5, horizontal: 20),
+                                      child: Text(
+                                        '      Log Out      ',
                                         style: TextStyle(fontSize: 16),
                                       ))),
                               const SizedBox(

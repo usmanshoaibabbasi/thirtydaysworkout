@@ -50,7 +50,7 @@ class AccountScreen extends StatelessWidget {
               accountText(
                   context: context,
                   passtext: 'BODY',
-                  passfontsize: 50.0,
+                  passfontsize: 40.0,
                   passfontweight: FontWeight.normal,
                   passcolor: const Color(0xff003BFF)),
               const SizedBox(
@@ -59,7 +59,7 @@ class AccountScreen extends StatelessWidget {
               accountText(
                   context: context,
                   passtext: 'UNDER',
-                  passfontsize: 50.0,
+                  passfontsize: 40.0,
                   passfontweight: FontWeight.normal,
                   passcolor: const Color(0xffFFFFFF)),
               const SizedBox(
@@ -77,7 +77,7 @@ class AccountScreen extends StatelessWidget {
               accountText(
                   context: context,
                   passtext: 'MIND',
-                  passfontsize: 46.0,
+                  passfontsize: 36.0,
                   passfontweight: FontWeight.normal,
                   passcolor: const Color(0xff003BFF)),
               const SizedBox(
@@ -86,7 +86,7 @@ class AccountScreen extends StatelessWidget {
               accountText(
                   context: context,
                   passtext: 'ON A',
-                  passfontsize: 46.0,
+                  passfontsize: 36.0,
                   passfontweight: FontWeight.normal,
                   passcolor: const Color(0xffFFFFFF)),
               const SizedBox(
@@ -95,7 +95,7 @@ class AccountScreen extends StatelessWidget {
               accountText(
                   context: context,
                   passtext: 'MISSION',
-                  passfontsize: 46.0,
+                  passfontsize: 36.0,
                   passfontweight: FontWeight.normal,
                   passcolor: const Color(0xffFFFFFF)),
               const SizedBox(
@@ -158,6 +158,9 @@ class AccountScreen extends StatelessWidget {
                   passfontsize: 16.0,
                   passfontweight: FontWeight.normal,
                   passcolor: const Color(0xffFFFFFF)),
+              const SizedBox(
+                height: 60,
+              ),
             ],
           ),
         ),

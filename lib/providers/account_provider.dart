@@ -2,6 +2,7 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class GoogleSignInProvider extends ChangeNotifier {
@@ -24,7 +25,8 @@ class GoogleSignInProvider extends ChangeNotifier {
   GoogleSignInAccount get user => _user!;
 
   Future googleLogin() async {
-    final googleUser =await googleSignIn.signIn();
+    try {
+      final googleUser =await googleSignIn.signIn();
 
     if(googleUser == null) return;
 
@@ -37,6 +39,16 @@ class GoogleSignInProvider extends ChangeNotifier {
       idToken: googleAuth.idToken,
     );
     await FirebaseAuth.instance.signInWithCredential(credential);
+    } catch (e){
+      if(kDebugMode) {
+        print(e.toString());
+      }
+    }
     notifyListeners();
+  }
+
+  Future logout() async {
+    await googleSignIn.disconnect();
+    FirebaseAuth.instance.signOut();
   }
 }
