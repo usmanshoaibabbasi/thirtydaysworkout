@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class AdHelper {
-  /// video link for intensitions add ///
+  /// video link for interstitial ad. ///
   /// https://youtu.be/MLEOFZoxMxc ///
   static int noTabsToShowAdd = 2;
   static int interstitialAdCount = 0;
