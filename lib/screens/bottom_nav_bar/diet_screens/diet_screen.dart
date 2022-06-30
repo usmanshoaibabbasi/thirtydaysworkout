@@ -71,7 +71,7 @@ class _DietClassState extends State<DietClass> {
                     isLoaded
                         ? SingleChildScrollView(
                           child: Container(
-                              height: screenheight * 0.40,
+                              height: screenheight * 0.41,
                               color: Colors.black12,
                               child: AdWidget(
                                 ad: _ad,
