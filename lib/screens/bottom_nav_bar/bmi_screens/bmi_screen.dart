@@ -2,11 +2,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:thirty_days_workout/data/constants.dart';
+import 'package:thirty_days_workout/data/image_paths.dart';
 import 'package:thirty_days_workout/providers/bmi_provider.dart';
 import 'package:thirty_days_workout/providers/bottom_nav_provider.dart';
 import 'package:thirty_days_workout/widgets/bmi_widgets.dart';
 import 'package:thirty_days_workout/widgets/header.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:thirty_days_workout/helpers/db_helper.dart';
 import 'dart:math';
 
 class BMIClass extends StatefulWidget {
@@ -32,7 +34,11 @@ class _BMIClassState extends State<BMIClass> {
   String fatcalculated1 = '';
   TextEditingController weightcontroller = TextEditingController();
   TextEditingController heightcontroller = TextEditingController();
-
+  DBHelper dbHelper = DBHelper();
+  void initState() {
+    dbHelper.initDb();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     final screenwidth = MediaQuery.of(context).size.width;
@@ -48,6 +54,7 @@ class _BMIClassState extends State<BMIClass> {
     // if (kDebugMode) {
     //   print('build all widgets');
     // }
+
     return Scaffold(
       backgroundColor: homebackgroundcolor,
       body: Stack(
@@ -109,13 +116,27 @@ class _BMIClassState extends State<BMIClass> {
                                   containercolor: value.genderSelected == true
                                       ? navbarcolor
                                       : Colors.transparent,
-                                  iconpass: FontAwesomeIcons.venus,
+                                  // widgetpass: FontAwesomeIcons.venus,
+                                  // widgetpass: Image.asset(
+                                  //   bmimaleImg,
+                                  // ),
                                   textpass: 'Male',
+                                  textcolorpass: value.genderSelected == true
+                                      ? Colors.white
+                                      : navbarcolor,
+                                  widgetpass: Container(
+                                    decoration: const BoxDecoration(
+                                      image: DecorationImage(
+                                        image: ExactAssetImage(bmimaleImg),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               );
                             }),
                             SizedBox(
-                              width: screenwidth * 0.06,
+                              width: screenwidth * 0.10,
                             ),
 
                             /// 2nd Container
@@ -140,8 +161,18 @@ class _BMIClassState extends State<BMIClass> {
                                   containercolor: value.genderSelected == false
                                       ? navbarcolor
                                       : Colors.transparent,
-                                  iconpass: FontAwesomeIcons.mars,
                                   textpass: 'Female',
+                                  textcolorpass: value.genderSelected == false
+                                      ? Colors.white
+                                      : navbarcolor,
+                                  widgetpass: Container(
+                                    decoration: const BoxDecoration(
+                                      image: DecorationImage(
+                                        image: ExactAssetImage(bmifemaleImg),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               );
                             }),
@@ -159,7 +190,9 @@ class _BMIClassState extends State<BMIClass> {
                         /// Age Slider Container
                         Container(
                           height: 170,
-                          width: screenwidth,
+                          width: screenwidth * 0.96,
+                          margin: EdgeInsets.symmetric(
+                              horizontal: screenwidth * 0.02),
                           decoration: BoxDecoration(
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(10)),

@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:thirty_days_workout/helpers/adHelper.dart';
 
 class BottomNavProvider with ChangeNotifier{
-  int _currentIndex  = 2;
+  int _currentIndex  = 1;
   int get currentIndex => _currentIndex ;
   void setindex(int index) {
     _currentIndex  = index;

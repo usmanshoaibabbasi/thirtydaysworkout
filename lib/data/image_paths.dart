@@ -19,5 +19,9 @@ const String fitnesslogo = 'assets/images/fitness logo.png';
 const String trophyGRAY = 'assets/images/trophyGRAY.png';
 const String trophy = 'assets/images/trophy.png';
 const String youtubePlayerImg = 'assets/images/youtubePlayerBackground.png';
+/// BMI Screen
+const String bmimaleImg = 'assets/images/male.png';
+const String bmifemaleImg = 'assets/images/female.png';
+
 
 

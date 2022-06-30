@@ -1,8 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 import 'package:thirty_days_workout/data/constants.dart';
 import 'package:thirty_days_workout/data/image_paths.dart';
-import 'package:thirty_days_workout/helpers/db_helper.dart';
 import 'package:thirty_days_workout/main.dart';
 import 'package:thirty_days_workout/providers/bottom_nav_provider.dart';
 import 'package:thirty_days_workout/widgets/diet_widget.dart';
@@ -16,11 +17,21 @@ class DietClass extends StatefulWidget {
 }
 
 class _DietClassState extends State<DietClass> {
-  DBHelper dbHelper = DBHelper();
+  /// Native Ad
+  late NativeAd _ad;
+  bool isLoaded = false;
+
+  /// Native Ad
   @override
   void initState() {
-    dbHelper.initDb();
+    loadNativeAd();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _ad.dispose();
+    super.dispose();
   }
 
   @override
@@ -32,17 +43,17 @@ class _DietClassState extends State<DietClass> {
     return Scaffold(
       backgroundColor: homebackgroundcolor,
       body: GestureDetector(
-        onPanUpdate: (details) {
-          // Swiping in right direction.
-          if (details.delta.dx > 0) {
-            bottomNavProvider.setindex(1);
-          }
-
-          // Swiping in left direction.
-          if (details.delta.dx < 0) {
-            bottomNavProvider.setindex(3);
-          }
-        },
+        // onPanUpdate: (details) {
+        //   // Swiping in right direction.
+        //   if (details.delta.dx > 0) {
+        //     bottomNavProvider.setindex(1);
+        //   }
+        //
+        //   // Swiping in left direction.
+        //   if (details.delta.dx < 0) {
+        //     bottomNavProvider.setindex(3);
+        //   }
+        // },
         child: Column(
           children: [
             header(
@@ -57,15 +68,20 @@ class _DietClassState extends State<DietClass> {
                     const SizedBox(
                       height: 10,
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        bottomNavProvider.setindex(4);
-                      },
-                      child: Image.asset(homepageimage,
-                          height: screenheight * 0.35,
-                          width: screenwidth,
-                          fit: BoxFit.fill),
-                    ),
+                    isLoaded
+                        ? SingleChildScrollView(
+                          child: Container(
+                              height: screenheight * 0.40,
+                              color: Colors.black12,
+                              child: AdWidget(
+                                ad: _ad,
+                              ),
+                            ),
+                        )
+                        : Image.asset(homepageimage,
+                            height: screenheight * 0.35,
+                            width: screenwidth,
+                            fit: BoxFit.fill),
 
                     /// 2nd SizedBox
                     const SizedBox(
@@ -115,5 +131,29 @@ class _DietClassState extends State<DietClass> {
         ),
       ),
     );
+  }
+
+  void loadNativeAd() {
+    _ad = NativeAd(
+        request: const AdRequest(),
+
+        ///This is a test adUnitId make sure to change it
+        adUnitId: 'ca-app-pub-3940256099942544/2247696110',
+        factoryId: 'listTile',
+        listener: NativeAdListener(onAdLoaded: (ad) {
+          if (kDebugMode) {
+            print('Ad loaded');
+          }
+          setState(() {
+            isLoaded = true;
+          });
+        }, onAdFailedToLoad: (ad, error) {
+          ad.dispose();
+          if (kDebugMode) {
+            print('failed to load the ad ${error.message}, ${error.code}');
+          }
+        }));
+
+    _ad.load();
   }
 }

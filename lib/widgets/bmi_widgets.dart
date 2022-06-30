@@ -9,12 +9,13 @@ import 'package:thirty_days_workout/data/image_paths.dart';
 Widget maleFemaleContainer({
   context,
   containercolor,
-  iconpass,
+  widgetpass,
   textpass,
+  textcolorpass,
 }) {
   return Container(
-    width: MediaQuery.of(context).size.width * 0.45,
-    height: 140,
+    width: MediaQuery.of(context).size.width * 0.43,
+    height: 130,
     decoration: BoxDecoration(
       borderRadius: const BorderRadius.all(Radius.circular(10)),
       color: containercolor,
@@ -27,14 +28,7 @@ Widget maleFemaleContainer({
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Expanded(
-          child: SizedBox(
-            width: double.infinity,
-            child: Icon(
-              iconpass,
-              size: 60,
-              color: Colors.white,
-            ),
-          ),
+          child: SizedBox(width: double.infinity, child: widgetpass),
         ),
         SizedBox(
           width: double.infinity,
@@ -43,7 +37,7 @@ Widget maleFemaleContainer({
               padding: const EdgeInsets.symmetric(vertical: 10),
               child: Text(
                 textpass,
-                style: const TextStyle(fontSize: 16, color: Colors.white),
+                style: TextStyle(fontSize: 16, color: textcolorpass),
               ),
             ),
           ),
