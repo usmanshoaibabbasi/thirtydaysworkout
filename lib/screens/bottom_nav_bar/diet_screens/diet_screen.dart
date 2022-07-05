@@ -7,6 +7,7 @@ import 'package:thirty_days_workout/data/image_paths.dart';
 import 'package:thirty_days_workout/helpers/adHelper.dart';
 import 'package:thirty_days_workout/main.dart';
 import 'package:thirty_days_workout/providers/bottom_nav_provider.dart';
+import 'package:thirty_days_workout/providers/universal_provider.dart';
 import 'package:thirty_days_workout/widgets/diet_widget.dart';
 import 'package:thirty_days_workout/widgets/header.dart';
 
@@ -25,7 +26,11 @@ class _DietClassState extends State<DietClass> {
   /// Native Ad
   @override
   void initState() {
-    loadNativeAd();
+    final universalProvider = Provider.of<UniversalProvider>(context, listen: false);
+
+    if(universalProvider.showAdds == true) {
+      loadNativeAd();
+    }
     super.initState();
   }
 

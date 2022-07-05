@@ -9,6 +9,7 @@ import 'package:thirty_days_workout/helpers/db_helper.dart';
 import 'package:thirty_days_workout/modals/home_screen_modals.dart';
 import 'package:thirty_days_workout/providers/bottom_nav_provider.dart';
 import 'package:thirty_days_workout/providers/home_provider.dart';
+import 'package:thirty_days_workout/providers/universal_provider.dart';
 import 'package:thirty_days_workout/screens/bottom_nav_bar/home_screens/home_days_list_card.dart';
 import 'package:thirty_days_workout/widgets/header.dart';
 import 'package:thirty_days_workout/widgets/home_widget.dart';
@@ -26,7 +27,10 @@ class _HomeClassState extends State<HomeClass> {
   bool waiting = true;
   @override
   void initState() {
-    loadNativeAd();
+    final universalProvider = Provider.of<UniversalProvider>(context, listen: false);
+    if(universalProvider.showAdds == true) {
+      loadNativeAd();
+    }
     getHomeDaysList().then((value) => {
           Future.delayed(const Duration(milliseconds: 1500), () {
             setState(() {

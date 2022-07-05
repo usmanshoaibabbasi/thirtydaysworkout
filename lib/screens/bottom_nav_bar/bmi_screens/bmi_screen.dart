@@ -38,7 +38,6 @@ class _BMIClassState extends State<BMIClass> {
   TextEditingController heightcontroller = TextEditingController();
   DBHelper dbHelper = DBHelper();
   void initState() {
-    ToshowadorNot();
     dbHelper.initDb();
     super.initState();
   }
@@ -634,23 +633,5 @@ class _BMIClassState extends State<BMIClass> {
     }
     weightcalculated = (genderWeight + fixValue * heightForIdealWeight).round();
     weightcalculated1 = weightcalculated.toString();
-  }
-
-  Future ToshowadorNot() async {
-    final universalProvider = Provider.of<UniversalProvider>(context, listen: false);
-    final docgymexercise = FirebaseFirestore.instance
-        .collection('google_admob_show')
-        .doc('wJrlnsrZorFf0JuW1W3n');
-    final snapshot = await docgymexercise.get();
-
-    if (snapshot.exists) {
-      var adshow = snapshot.data()!['show_ads'];
-      if (kDebugMode) {
-        print(snapshot.data()!['show_ads']);
-      }
-      universalProvider.ToshowAddsOrNot(adshow);
-      return snapshot.data();
-    } else {
-    }
   }
 }

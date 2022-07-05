@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:thirty_days_workout/data/constants.dart';
 import 'package:thirty_days_workout/data/image_paths.dart';
+import 'package:thirty_days_workout/helpers/app_open_addmanager.dart';
 import 'package:thirty_days_workout/main.dart';
 import 'package:thirty_days_workout/widgets/splash_widget.dart';
 
@@ -17,9 +18,11 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   int percent = 0;
   bool buttonshow = false;
+  AppOpenAdManager appOpenAdManager = AppOpenAdManager();
 
   @override
   void initState() {
+    appOpenAdManager.loadAd();
     Timer? timer;
     timer = Timer.periodic(const Duration(milliseconds: 1000), (_) {
       setState(() {

@@ -11,6 +11,11 @@ class GoogleSignInProvider extends ChangeNotifier {
 
   bool get loading => _loading;
 
+
+  bool _noaccountselected = false;
+
+  bool get noaccountselected => _noaccountselected;
+
   void setloading(bool loading) {
     _loading = loading;
     notifyListeners();
@@ -28,7 +33,10 @@ class GoogleSignInProvider extends ChangeNotifier {
     try {
       final googleUser =await googleSignIn.signIn();
 
-    if(googleUser == null) return;
+    if(googleUser == null) {
+      _noaccountselected = true;
+      return;
+    }
 
     _user = googleUser;
 

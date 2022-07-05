@@ -31,6 +31,9 @@ import 'package:thirty_days_workout/screens/splash_screen/splash_screen.dart';
 
 /// In pod File at top platform :ios, '9.0' uncomment and write '9.0' to '10.0' ///
 /// In info.plist for instentitial add in <dict> <key> <key> <key> upto 3 key tags
+///
+/// open app Add
+/// https://codefittings.com/admob-app-open-ad-in-flutter-with-complete-guide/
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();

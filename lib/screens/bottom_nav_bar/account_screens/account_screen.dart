@@ -145,7 +145,9 @@ class AccountScreen extends StatelessWidget {
                   provider.setloading(true);
                   provider.googleLogin().then((value) {
                     provider.setloading(false);
-                    Navigator.pushNamed(context, gymProgressRoute);
+                    if(provider.noaccountselected == false) {
+                      Navigator.pushNamed(context, gymProgressRoute);
+                    }
                   });
                 },
               ),
