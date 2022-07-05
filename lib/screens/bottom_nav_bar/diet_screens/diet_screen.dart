@@ -4,6 +4,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 import 'package:thirty_days_workout/data/constants.dart';
 import 'package:thirty_days_workout/data/image_paths.dart';
+import 'package:thirty_days_workout/helpers/adHelper.dart';
 import 'package:thirty_days_workout/main.dart';
 import 'package:thirty_days_workout/providers/bottom_nav_provider.dart';
 import 'package:thirty_days_workout/widgets/diet_widget.dart';
@@ -138,7 +139,7 @@ class _DietClassState extends State<DietClass> {
         request: const AdRequest(),
 
         ///This is a test adUnitId make sure to change it
-        adUnitId: 'ca-app-pub-3940256099942544/2247696110',
+        adUnitId: AdHelper.nativeAd,
         factoryId: 'listTile',
         listener: NativeAdListener(onAdLoaded: (ad) {
           if (kDebugMode) {

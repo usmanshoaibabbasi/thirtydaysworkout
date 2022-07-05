@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -5,6 +6,7 @@ import 'package:thirty_days_workout/data/constants.dart';
 import 'package:thirty_days_workout/data/image_paths.dart';
 import 'package:thirty_days_workout/providers/bmi_provider.dart';
 import 'package:thirty_days_workout/providers/bottom_nav_provider.dart';
+import 'package:thirty_days_workout/providers/universal_provider.dart';
 import 'package:thirty_days_workout/widgets/bmi_widgets.dart';
 import 'package:thirty_days_workout/widgets/header.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -36,6 +38,7 @@ class _BMIClassState extends State<BMIClass> {
   TextEditingController heightcontroller = TextEditingController();
   DBHelper dbHelper = DBHelper();
   void initState() {
+    ToshowadorNot();
     dbHelper.initDb();
     super.initState();
   }
@@ -631,5 +634,23 @@ class _BMIClassState extends State<BMIClass> {
     }
     weightcalculated = (genderWeight + fixValue * heightForIdealWeight).round();
     weightcalculated1 = weightcalculated.toString();
+  }
+
+  Future ToshowadorNot() async {
+    final universalProvider = Provider.of<UniversalProvider>(context, listen: false);
+    final docgymexercise = FirebaseFirestore.instance
+        .collection('google_admob_show')
+        .doc('wJrlnsrZorFf0JuW1W3n');
+    final snapshot = await docgymexercise.get();
+
+    if (snapshot.exists) {
+      var adshow = snapshot.data()!['show_ads'];
+      if (kDebugMode) {
+        print(snapshot.data()!['show_ads']);
+      }
+      universalProvider.ToshowAddsOrNot(adshow);
+      return snapshot.data();
+    } else {
+    }
   }
 }

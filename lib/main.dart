@@ -8,6 +8,7 @@ import 'package:thirty_days_workout/providers/bottom_nav_provider.dart';
 import 'package:thirty_days_workout/providers/gym_exercises_provider.dart';
 import 'package:thirty_days_workout/providers/home_everyday_provider.dart';
 import 'package:thirty_days_workout/providers/home_provider.dart';
+import 'package:thirty_days_workout/providers/universal_provider.dart';
 import 'package:thirty_days_workout/screens/bottom_nav_bar/account_screens/save_gym_progress.dart';
 import 'package:thirty_days_workout/screens/bottom_nav_bar/diet_screens/gym_screens/gym_diet_plan.dart';
 import 'package:thirty_days_workout/screens/bottom_nav_bar/diet_screens/gym_screens/gym_diet_plan_days.dart';
@@ -54,6 +55,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => HomeEveryDayProvider()),
         ChangeNotifierProvider(create: (_) => GoogleSignInProvider()),
         ChangeNotifierProvider(create: (_) => GymExercisesFullProvider()),
+        ChangeNotifierProvider(create: (_) => UniversalProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

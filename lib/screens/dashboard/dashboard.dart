@@ -3,8 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:rate_my_app/rate_my_app.dart';
 import 'package:thirty_days_workout/helpers/adHelper.dart';
 import 'package:thirty_days_workout/providers/bottom_nav_provider.dart';
+import 'package:thirty_days_workout/providers/universal_provider.dart';
 import 'package:thirty_days_workout/screens/bottom_nav_bar/account_screens/account_screen.dart';
 import 'package:thirty_days_workout/screens/bottom_nav_bar/bmi_screens/bmi_screen.dart';
 import 'package:thirty_days_workout/screens/bottom_nav_bar/diet_screens/diet_screen.dart';
@@ -34,6 +36,28 @@ class _MyHomePageState extends State<MyHomePage> {
     if (InterstitialAdclass.interstitialAd == null) {
       InterstitialAdclass.createInterstitialAd();
     }
+    ///
+    Future.delayed(Duration.zero).then((value) {
+      if(Provider.of<UniversalProvider>(context, listen: false).showReviewDialog == true){
+        Provider.of<UniversalProvider>(context,listen: false).toggleReviewDialogToFalse();
+        rateMyApp.init().then((_) {
+          if (rateMyApp.shouldOpenDialog) {
+            rateMyApp.showRateDialog(
+              context,
+              title: 'Rate this App',
+              message:
+              'if you like this app, then please take a liitle time to review our app',
+              rateButton: 'Rate',
+              laterButton: 'Maybe Later',
+              noButton: 'Never',
+              onDismissed: () =>
+                  rateMyApp.callEvent(RateMyAppEventType.laterButtonPressed),
+            );
+          }
+        });
+      }
+    });
+    ///
     super.initState();
   }
   @override
@@ -90,4 +114,11 @@ class _MyHomePageState extends State<MyHomePage> {
           )),
     );
   }
+  final RateMyApp rateMyApp = RateMyApp(
+      minDays: 0,
+      minLaunches: 3,
+      googlePlayIdentifier: 'fr.skyost.example',
+      // appStoreIdentifier: '',
+      remindDays: 0,
+      remindLaunches: 1);
 }

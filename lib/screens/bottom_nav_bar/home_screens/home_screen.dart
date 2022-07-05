@@ -1,7 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 import 'package:thirty_days_workout/data/constants.dart';
 import 'package:thirty_days_workout/data/image_paths.dart';
+import 'package:thirty_days_workout/helpers/adHelper.dart';
 import 'package:thirty_days_workout/helpers/db_helper.dart';
 import 'package:thirty_days_workout/modals/home_screen_modals.dart';
 import 'package:thirty_days_workout/providers/bottom_nav_provider.dart';
@@ -18,9 +21,12 @@ class HomeClass extends StatefulWidget {
 }
 
 class _HomeClassState extends State<HomeClass> {
+  late NativeAd _ad;
+  bool isLoaded = false;
   bool waiting = true;
   @override
   void initState() {
+    loadNativeAd();
     getHomeDaysList().then((value) => {
           Future.delayed(const Duration(milliseconds: 1500), () {
             setState(() {
@@ -34,6 +40,7 @@ class _HomeClassState extends State<HomeClass> {
   @override
   Widget build(BuildContext context) {
     final screenwidth = MediaQuery.of(context).size.width;
+    final screenheight = MediaQuery.of(context).size.height;
     final homeProvider = Provider.of<HomeProvider>(context, listen: false);
     final bottomNavProvider = Provider.of<BottomNavProvider>(context);
     return Scaffold(
@@ -61,6 +68,16 @@ class _HomeClassState extends State<HomeClass> {
                 const SizedBox(
                   height: 10,
                 ),
+                isLoaded
+                    ? SingleChildScrollView(
+                  child: Container(
+                    height: screenheight * 0.41,
+                    color: Colors.black12,
+                    child: AdWidget(
+                      ad: _ad,
+                    ),
+                  ),
+                ):
                 Image.asset(homepageimage,
                     height: 200, width: screenwidth, fit: BoxFit.cover),
                 homeProvider.home_days_List.isNotEmpty
@@ -103,5 +120,28 @@ class _HomeClassState extends State<HomeClass> {
     // List<homeDaysModalFullData> homeDaysListfulldata = await dbHelper.gethomelistfulldata();
     homeProvider.setHomeDayList(homeDaysList);
     // homeProvider.setHomeDayListfulldata(homeDaysListfulldata);
+  }
+  void loadNativeAd() {
+    _ad = NativeAd(
+        request: const AdRequest(),
+
+        ///This is a test adUnitId make sure to change it
+        adUnitId: AdHelper.nativeAd,
+        factoryId: 'listTile',
+        listener: NativeAdListener(onAdLoaded: (ad) {
+          if (kDebugMode) {
+            print('Ad loaded');
+          }
+          setState(() {
+            isLoaded = true;
+          });
+        }, onAdFailedToLoad: (ad, error) {
+          ad.dispose();
+          if (kDebugMode) {
+            print('failed to load the ad ${error.message}, ${error.code}');
+          }
+        }));
+
+    _ad.load();
   }
 }
